@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Parfums - Profumeria di Lusso</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --cream: #FFF8E7;
+            --black: #121212;
+            --dark-gray: #222222;
+            --light-gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Playfair Display', sans-serif;
+        }
+        
+        body {
+            background-color: var(--cream);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+        
+        /* Header e navigazione */
+        header {
+            background-color: var(--black);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: var(--gold);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px var(--gold);
+        }
+        
+        .search-container button {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .user-actions a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .user-actions a:hover {
+            color: white;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: var(--gold);
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Hero section */
+        .hero {
+            position: relative;
+            height: 80vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/800') center/cover no-repeat;
+            z-index: -1;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            max-width: 900px;
+        }
+        
+        .hero-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .hero-content h2 span {
+            color: var(--gold);
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--gold);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid var(--gold);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--gold);
+        }
+        
+        /* Sezione categorie */
+        .categories {
+            padding: 80px 5%;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title h3 {
+            font-size: 2.5rem;
+            color: var(--black);
+            display: inline-block;
+            position: relative;
+            padding: 0 15px;
+        }
+        
+        .section-title h3::before, .section-title h3::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 1px;
+            background-color: var(--gold);
+        }
+        
+        .section-title h3::before {
+            left: -60px;
+        }
+        
+        .section-title h3::after {
+            right: -60px;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s ease;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+        
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .category-card:hover .category-overlay {
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        }
+        
+        .category-overlay h4 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .category-overlay a {
+            color: var(--gold);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Nuovi arrivi */
+        .new-arrivals {
+            padding: 80px 5%;
+            background-color: var(--light-gray);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 5px 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+        
+        .product-image {
+            height: 300px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: all 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-brand {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .product-name {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .product-notes {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .product-size {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--black);
+        }
+        
+        .add-to-cart {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: var(--black);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            margin-top: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .add-to-cart:hover {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+        
+        /* Best Sellers */
+        .best-sellers {
+            padding: 80px 5%;
+            background-color: white;
+        }
+        
+        /* Offerte speciali */
+        .special-offers {
+            padding: 80px 5%;
+            background-color: var(--light-gray);
+        }
+        
+        .offer-banner {
+            background: linear-gradient(to right, var(--black), var(--dark-gray));
+            color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .offer-content {
+            max-width: 60%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .offer-content h3 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        
+        .offer-content h3 span {
+            color: var(--gold);
+        }
+        
+        .offer-content p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .offer-image {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 40%;
+        }
+        
+        .offer-image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0.6;
+        }
+        
+        /* Consigli */
+        .tips {
+            padding: 80px 5%;
+            background-color: white;
+        }
+        
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .tip-card {
+            background-color: var(--light-gray);
+            border-radius: 10px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tip-icon {
+            font-size: 2.5rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        
+        .tip-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .tip-text {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Marchi */
+        .brands {
+            padding: 60px 5%;
+            background-color: var(--light-gray);
+            text-align: center;
+        }
+        
+        .brands h3 {
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .brands-slider {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .brand-item {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+            max-width: 120px;
+        }
+        
+        .brand-item:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 60px 5%;
+            background-color: var(--black);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h4 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            color: var(--gold);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .copyright a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        /* Animazioni */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        /* Responsività */
+        @media (max-width: 1024px) {
+            .hero-content h2 {
+                font-size: 2.8rem;
+            }
+            
+            .offer-content {
+                max-width: 100%;
+            }
+            
+            .offer-image {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+            
+            .hero-content h2 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h3 {
+                font-size: 2rem;
+            }
+            
+            .section-title h3::before, .section-title h3::after {
+                display: none;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-form input, .newsletter-form button {
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px 30px;
+            }
+            
+            .hero-content h2 {
+                font-size: 1.8rem;
+            }
+            
+            .category-card {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <h1>ELITE PARFUMS</h1>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Cerca profumi, marchi...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="user-actions">
+                <a href="#" title="Preferiti"><i class="far fa-heart"></i></a>
+                <a href="#" title="Account"><i class="far fa-user"></i></a>
+                <a href="#" title="Carrello"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="brands.html">Brand</a></li>
+                <li><a href="fragrances.html">Profumi</a></li>
+                <li><a href="offers.html">Offerte</a></li>
+                <li><a href="about.html">Chi siamo</a></li>
+                <li><a href="contact.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <h2>Il <span>Lusso</span> ha una nuova <span>Fragranza</span></h2>
+            <p>Scopri la nostra selezione esclusiva di profumi di lusso. Dalle fragranze iconiche alle novità più attese, Elite Parfums è la destinazione perfetta per chi cerca l'eccellenza.</p>
+            <a href="#" class="cta-button">Scopri le collezioni</a>
+        </div>
+    </section>
+    
+    <section class="categories">
+        <div class="section-title" data-aos="fade-up">
+            <h3>Le nostre categorie</h3>
+        </div>
+        
+        <div class="categories-grid">
+            <div class="category-card" data-aos="fade-up" data-aos-delay="100">
+                <img src="/api/placeholder/400/500" alt="Profumi da donna">
+                <div class="category-overlay">
+                    <h4>Per Lei</h4>
+                    <a href="#">Scopri di più &rarr;</a>
+                </div>
+            </div>
+            
+            <div class="category-card" data-aos="fade-up" data-aos-delay="200">
+                <img src="/api/placeholder/400/500" alt="Profumi da uomo">
+                <div class="category-overlay">
+                    <h4>Per Lui</h4>
+                    <a href="#">Scopri di più &rarr;</a>
+                </div>
+            </div>
+            
+            <div class="category-card" data-aos="fade-up" data-aos-delay="300">
+                <img src="/api/placeholder/400/500" alt="Profumi unisex">
+                <div class="category-overlay">
+                    <h4>Unisex</h4>
+                    <a href="#">Scopri di più &rarr;</a>
+                </div>
+            </div>
+            
+            <div class="category-card" data-aos="fade-up" data-aos-delay="400">
+                <img src="/api/placeholder/400/500" alt="Collezioni esclusive">
+                <div class="category-overlay">
+                    <h4>Lusso</h4>
+                    <a href="#">Scopri di più &rarr;</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="new-arrivals">
+        <div class="section-title" data-aos="fade-up">
+            <h3>Nuovi arrivi</h3>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-badge">Nuovo</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Dior Sauvage Elixir">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Dior</div>
+                    <h4 class="product-name">Sauvage Elixir</h4>
+                    <p class="product-notes">Note di testa: Cannella, Noce Moscata - Note di cuore: Lavanda, Sandalo - Note di base: Patchouli, Ambra</p>
+                    <div class="product-meta">
+                        <span class="product-size">60 ml</span>
+                        <span class="product-price">€132.00</span>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-badge">Nuovo</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Chanel Coco Mademoiselle">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Chanel</div>
+                    <h4 class="product-name">Coco Mademoiselle Intense</h4>
+                    <p class="product-notes">Note di testa: Arancia, Bergamotto - Note di cuore: Rosa, Gelsomino - Note di base: Patchouli, Vaniglia</p>
+                    <div class="product-meta">
+                        <span class="product-size">100 ml</span>
+                        <span class="product-price">€140.00</span>
+                    </div>
+  <!--                  <button class="add-to-cart">Aggiungi al carrello</button>   -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="product-badge">Nuovo</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Tom Ford Oud Wood">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Tom Ford</div>
+                    <h4 class="product-name">Oud Wood</h4>
+                    <p class="product-notes">Note di testa: Pepe, Cardamomo - Note di cuore: Oud, Legno di Sandalo - Note di base: Ambra, Vetiver</p>
+                    <div class="product-meta">
+                        <span class="product-size">50 ml</span>
+                        <span class="product-price">€245.00</span>
+                    </div>
+  <!--                  <button class="add-to-cart">Aggiungi al carrello</button>   -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="product-badge">Nuovo</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Yves Saint Laurent Libre">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Yves Saint Laurent</div>
+                    <h4 class="product-name">Libre Intense</h4>
+                    <p class="product-notes">Note di testa: Mandarino, Lavanda - Note di cuore: Fiori d'Arancio, Gelsomino - Note di base: Vaniglia, Muschio</p>
+                    <div class="product-meta">
+                        <span class="product-size">90 ml</span>
+                        <span class="product-price">€118.00</span>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>   -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="best-sellers">
+        <div class="section-title" data-aos="fade-up">
+            <h3>Best Seller</h3>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-badge" style="background-color: #FF5722;">Top</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Jo Malone English Pear & Freesia">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Jo Malone</div>
+                    <h4 class="product-name">English Pear & Freesia</h4>
+                    <p class="product-notes">Note di testa: Pera - Note di cuore: Fresia - Note di base: Patchouli, Ambra, Legno</p>
+                    <div class="product-meta">
+                        <span class="product-size">100 ml</span>
+                        <span class="product-price">€115.00</span>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-badge" style="background-color: #FF5722;">Top</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Creed Aventus">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Creed</div>
+                    <h4 class="product-name">Aventus</h4>
+                    <p class="product-notes">Note di testa: Ananas, Bergamotto - Note di cuore: Rosa, Gelsomino - Note di base: Vaniglia, Muschio, Ambra</p>
+                    <div class="product-meta">
+                        <span class="product-size">100 ml</span>
+                        <span class="product-price">€380.00</span>
+                    </div>
+  <!--                  <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="product-badge" style="background-color: #FF5722;">Top</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Byredo Gypsy Water">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Byredo</div>
+                    <h4 class="product-name">Gypsy Water</h4>
+                    <p class="product-notes">Note di testa: Bergamotto, Ginepro - Note di cuore: Incenso, Pino - Note di base: Vaniglia, Sandalo</p>
+                    <div class="product-meta">
+                        <span class="product-size">50 ml</span>
+                        <span class="product-price">€135.00</span>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="product-badge" style="background-color: #FF5722;">Top</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Maison Francis Kurkdjian Baccarat Rouge 540">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Maison Francis Kurkdjian</div>
+                    <h4 class="product-name">Baccarat Rouge 540</h4>
+                    <p class="product-notes">Note di testa: Zafferano, Gelsomino - Note di cuore: Ambra grigia - Note di base: Cedro, Abete rosso</p>
+                    <div class="product-meta">
+                        <span class="product-size">70 ml</span>
+                        <span class="product-price">€215.00</span>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="special-offers">
+        <div class="section-title" data-aos="fade-up">
+            <h3>Offerte Speciali</h3>
+        </div>
+        
+        <div class="offer-banner" data-aos="fade-up">
+            <div class="offer-content">
+                <h3>Fino al <span>70% di sconto</span> sui profumi selezionati</h3>
+                <p>Scopri la nostra collezione di fragranze in promozione. Un'occasione perfetta per provare nuove essenze o acquistare i tuoi profumi preferiti a prezzi speciali.</p>
+                <a href="#" class="cta-button">Scopri le offerte</a>
+            </div>
+            <div class="offer-image">
+                <img src="/api/placeholder/600/400" alt="Offerte speciali">
+            </div>
+        </div>
+        
+        <div class="products-grid">
+            <div class="product-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="product-badge" style="background-color: #E91E63;">-50%</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Giorgio Armani Si">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Giorgio Armani</div>
+                    <h4 class="product-name">Sì Eau de Parfum</h4>
+                    <p class="product-notes">Note di testa: Ribes nero - Note di cuore: Rosa di Maggio, Fresia - Note di base: Vaniglia, Patchouli</p>
+                    <div class="product-meta">
+                        <span class="product-size">100 ml</span>
+                        <div>
+                            <span style="text-decoration: line-through; color: #999; margin-right: 8px;">€120.00</span>
+                            <span class="product-price">€60.00</span>
+                        </div>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="product-badge" style="background-color: #E91E63;">-15%</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Dolce & Gabbana Light Blue">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Dolce & Gabbana</div>
+                    <h4 class="product-name">Light Blue</h4>
+                    <p class="product-notes">Note di testa: Mela verde, Cedro - Note di cuore: Gelsomino, Rosa - Note di base: Ambra, Muschio</p>
+                    <div class="product-meta">
+                        <span class="product-size">50 ml</span>
+                        <div>
+                            <span style="text-decoration: line-through; color: #999; margin-right: 8px;">€75.00</span>
+                            <span class="product-price">€63.75</span>
+                        </div>
+                    </div>
+<!--                    <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="product-badge" style="background-color: #E91E63;">-30%</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Calvin Klein CK One">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Calvin Klein</div>
+                    <h4 class="product-name">CK One</h4>
+                    <p class="product-notes">Note di testa: Ananas, Mandarino verde - Note di cuore: Gelsomino, Violetta - Note di base: Muschio, Ambra</p>
+                    <div class="product-meta">
+                        <span class="product-size">200 ml</span>
+                        <div>
+                            <span style="text-decoration: line-through; color: #999; margin-right: 8px;">€85.00</span>
+                            <span class="product-price">€59.50</span>
+                        </div>
+                    </div>
+<!--                    <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+            
+            <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="product-badge" style="background-color: #E91E63;">-25%</div>
+                <div class="product-image">
+                    <img src="/api/placeholder/300/400" alt="Paco Rabanne 1 Million">
+                </div>
+                <div class="product-info">
+                    <div class="product-brand">Paco Rabanne</div>
+                    <h4 class="product-name">1 Million</h4>
+                    <p class="product-notes">Note di testa: Pompelmo, Menta - Note di cuore: Rosa, Cannella - Note di base: Cuoio, Ambra, Legno</p>
+                    <div class="product-meta">
+                        <span class="product-size">100 ml</span>
+                        <div>
+                            <span style="text-decoration: line-through; color: #999; margin-right: 8px;">€92.00</span>
+                            <span class="product-price">€69.00</span>
+                        </div>
+                    </div>
+ <!--                   <button class="add-to-cart">Aggiungi al carrello</button>  -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="tips">
+        <div class="section-title" data-aos="fade-up">
+            <h3>Consigli degli esperti</h3>
+        </div>
+        
+        <div class="tips-grid">
+            <div class="tip-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="tip-icon"><i class="fas fa-spray-can"></i></div>
+                <h4 class="tip-title">Come applicare il profumo</h4>
+                <p class="tip-text">Applica il profumo sui punti di pulsazione come polsi, collo e dietro le orecchie. Il calore del corpo amplifica la fragranza. Non strofinare, lascia che si asciughi naturalmente.</p>
+            </div>
+            
+            <div class="tip-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="tip-icon"><i class="far fa-clock"></i></div>
+                <h4 class="tip-title">La durata delle fragranze</h4>
+                <p class="tip-text">Un eau de parfum dura circa 6-8 ore, mentre un eau de toilette 4-6 ore. Per una maggiore durata, idrata la pelle prima dell'applicazione e utilizza prodotti della stessa linea.</p>
+            </div>
+            
+            <div class="tip-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="tip-icon"><i class="fas fa-leaf"></i></div>
+                <h4 class="tip-title">Capire le note olfattive</h4>
+                <p class="tip-text">Le note di testa sono le prime a essere percepite ma svaniscono rapidamente. Le note di cuore emergono dopo e durano ore. Le note di fondo sono quelle che permangono più a lungo.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="brands">
+        <h3 data-aos="fade-up">I nostri marchi</h3>
+        
+        <div class="brands-slider" data-aos="fade-up">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+            <img src="/api/placeholder/120/60" alt="Brand" class="brand-item">
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        <h3 data-aos="fade-up">Iscriviti alla newsletter</h3>
+        <p data-aos="fade-up">Resta aggiornato sulle ultime novità e offerte esclusive. Iscriviti alla nostra newsletter per ricevere aggiornamenti sui nuovi arrivi, offerte speciali e consigli di profumeria.</p>
+        
+        <form class="newsletter-form" data-aos="fade-up">
+            <input type="email" placeholder="Il tuo indirizzo email" required>
+            <button type="submit">Iscriviti</button>
+        </form>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Informazioni</h4>
+                <ul>
+                    <li><a href="#">Chi siamo</a></li>
+                    <li><a href="#">Termini e condizioni</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookie policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Servizio clienti</h4>
+                <ul>
+                    <li><a href="#">Contattaci</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Categorie</h4>
+                <ul>
+                    <li><a href="#">Profumi donna</a></li>
+                    <li><a href="#">Profumi uomo</a></li>
+                    <li><a href="#">Profumi unisex</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contatti</h4>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@eliteparfums.it</span>
+                </div>
+                
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61550822829075"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/eliteprofumi_/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Elite Parfums. Tutti i diritti riservati. Design by <a href="#">Elite Design</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inizializza le animazioni AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Animazione del menu durante lo scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(18, 18, 18, 0.95)';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                } else {
+                    header.style.background = 'var(--black)';
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                }
+            });
+            
+            // Animazione per i prodotti
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.product-image img').style.transform = 'scale(1.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.product-image img').style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
