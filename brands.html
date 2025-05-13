@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand - Elite Parfums</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --gold: #D4AF37;
+            --cream: #FFF8E7;
+            --black: #121212;
+            --dark-gray: #222222;
+            --light-gray: #f5f5f5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', 'Playfair Display', sans-serif;
+        }
+        
+        body {
+            background-color: var(--cream);
+            color: var(--black);
+            overflow-x: hidden;
+        }
+        
+        /* Header e navigazione */
+        header {
+            background-color: var(--black);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            color: var(--gold);
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .logo h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 10px 15px;
+            padding-right: 40px;
+            border: none;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 5px var(--gold);
+        }
+        
+        .search-container button {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gold);
+            cursor: pointer;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .user-actions a {
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .user-actions a:hover {
+            color: white;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            padding: 5px 0;
+        }
+        
+        nav ul li a:hover {
+            color: var(--gold);
+        }
+        
+        nav ul li::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background-color: var(--gold);
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li:hover::after {
+            width: 100%;
+            left: 0;
+        }
+        
+        /* Page Banner */
+        .page-banner {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .page-banner-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/api/placeholder/1200/300') center/cover no-repeat;
+            z-index: -1;
+        }
+        
+        .page-banner-content {
+            text-align: center;
+            color: white;
+            z-index: 1;
+        }
+        
+        .page-banner-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+        }
+        
+        .page-banner-content h2 span {
+            color: var(--gold);
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            font-size: 1rem;
+        }
+        
+        .breadcrumb a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: var(--gold);
+        }
+        
+        .breadcrumb span {
+            color: var(--gold);
+        }
+        
+        /* Brands Filter */
+        .brands-filter {
+            background-color: white;
+            padding: 30px 5%;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            background: none;
+            border: 2px solid var(--black);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-button:hover, .filter-button.active {
+            background-color: var(--black);
+            color: white;
+        }
+        
+        .sort-select {
+            padding: 8px 15px;
+            border: 2px solid var(--black);
+            border-radius: 30px;
+            background-color: white;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+        
+        /* Brands Grid */
+        .brands-section {
+            padding: 60px 5%;
+            background-color: var(--light-gray);
+        }
+        
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .brand-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .brand-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .brand-logo {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+            background-color: var(--light-gray);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .brand-logo img {
+            max-width: 80%;
+            max-height: 80%;
+            transition: all 0.3s ease;
+        }
+        
+        .brand-card:hover .brand-logo img {
+            transform: scale(1.1);
+        }
+        
+        .brand-info {
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .brand-name {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .brand-desc {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            height: 85px;
+            overflow: hidden;
+        }
+        
+        .brand-link {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--black);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--black);
+        }
+        
+        .brand-link:hover {
+            background-color: transparent;
+            color: var(--black);
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            right: 0;
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 5px 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            z-index: 1;
+        }
+        
+        /* Featured Brand */
+        .featured-brand {
+            padding: 80px 5%;
+            background-color: white;
+        }
+        
+        .featured-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+        }
+        
+        .featured-image {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .featured-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .featured-details {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .featured-subtitle {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .featured-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .featured-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+        
+        .featured-text {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .featured-points {
+            margin-bottom: 30px;
+        }
+        
+        .featured-point {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .featured-point i {
+            color: var(--gold);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 60px 5%;
+            background-color: var(--black);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+        }
+        
+        .newsletter-form button {
+            background-color: var(--gold);
+            color: var(--black);
+            border: none;
+            padding: 0 30px;
+            border-radius: 0 30px 30px 0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h4 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            color: var(--gold);
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: #999;
+        }
+        
+        .copyright a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        
+        /* Animazioni */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        /* Responsività */
+        @media (max-width: 1024px) {
+            .featured-content {
+                flex-direction: column;
+            }
+            
+            .featured-image, .featured-details {
+                flex: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .newsletter-form input, .newsletter-form button {
+                border-radius: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px 30px;
+            }
+            
+            .page-banner-content h2 {
+                font-size: 2rem;
+            }
+            
+            .brand-desc {
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="top-bar">
+            <div class="logo">
+                <h1>ELITE PARFUMS</h1>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" placeholder="Cerca profumi, marchi...">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </div>
+            
+            <div class="user-actions">
+                <a href="#" title="Preferiti"><i class="far fa-heart"></i></a>
+                <a href="#" title="Account"><i class="far fa-user"></i></a>
+                <a href="#" title="Carrello"><i class="fas fa-shopping-bag"></i></a>
+            </div>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="brands.html">Brand</a></li>
+                <li><a href="fragrances.html">Profumi</a></li>
+                <li><a href="offers.html">Offerte</a></li>
+                <li><a href="about.html">Chi siamo</a></li>
+                <li><a href="contact.html">Contatti</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="page-banner">
+        <div class="page-banner-bg"></div>
+        <div class="page-banner-content">
+            <h2>I nostri <span>Brand</span></h2>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> / <span>Brand</span>
+            </div>
+        </div>
+    </section>
+    
+    <section class="brands-filter">
+        <div class="filter-container">
+            <div class="filter-options">
+                <button class="filter-button active">Tutti</button>
+                <button class="filter-button">Lusso</button>
+                <button class="filter-button">Designer</button>
+                <button class="filter-button">Nicchia</button>
+                <button class="filter-button">Classici</button>
+            </div>
+            
+            <select class="sort-select">
+                <option value="name-asc">Nome (A-Z)</option>
+                <option value="name-desc">Nome (Z-A)</option>
+                <option value="popular">Più popolari</option>
+                <option value="newest">Più recenti</option>
+            </select>
+        </div>
+    </section>
+    
+    <section class="brands-section">
+        <div class="brands-grid">
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="featured-badge">In evidenza</div>
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Chanel">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Chanel</h3>
+                    <p class="brand-desc">Maison di moda fondata da Coco Chanel. Incarna l'eleganza francese, con profumi iconici come il N°5 e Coco Mademoiselle.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Dior">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Dior</h3>
+                    <p class="brand-desc">Prestigiosa casa di moda francese, famosa per fragranze come J'adore, Miss Dior e Sauvage, che hanno definito generazioni.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Tom Ford">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Tom Ford</h3>
+                    <p class="brand-desc">Brand americano di lusso noto per profumi audaci e sofisticati come Black Orchid, Tobacco Vanille e Oud Wood.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Gucci">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Gucci</h3>
+                    <p class="brand-desc">Celebre casa di moda italiana che offre fragranze dal design inconfondibile come Gucci Bloom, Guilty e Flora.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="featured-badge">In evidenza</div>
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Jo Malone">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Jo Malone</h3>
+                    <p class="brand-desc">Brand britannico noto per profumi freschi e semplici, perfetti per essere sovrapposti. English Pear & Freesia è tra i più amati.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Creed">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Creed</h3>
+                    <p class="brand-desc">Storica casa di profumi di lusso con oltre 250 anni di storia. Le sue fragranze come Aventus sono tra le più prestigiose al mondo.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Byredo">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Byredo</h3>
+                    <p class="brand-desc">Brand svedese contemporaneo noto per profumi minimalisti e sofisticati come Gypsy Water e Bal d'Afrique.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Maison Francis Kurkdjian">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Maison Francis Kurkdjian</h3>
+                    <p class="brand-desc">Casa di profumeria contemporanea fondata dal maestro profumiere. Il suo Baccarat Rouge 540 è considerato un capolavoro.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+            
+            <div class="brand-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="brand-logo">
+                    <img src="/api/placeholder/200/100" alt="Acqua di Parma">
+                </div>
+                <div class="brand-info">
+                    <h3 class="brand-name">Acqua di Parma</h3>
+                    <p class="brand-desc">Marchio italiano di lusso celebre per fragranze fresche e mediterranee come Colonia e la serie Blu Mediterraneo.</p>
+                    <a href="#" class="brand-link">Scopri</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="featured-brand" data-aos="fade-up">
+        <div class="featured-content">
+            <div class="featured-image">
+                <img src="/api/placeholder/600/400" alt="Maison Francis Kurkdjian">
+            </div>
+            <div class="featured-details">
+                <p class="featured-subtitle">Brand del mese</p>
+                <h3 class="featured-title">Maison Francis Kurkdjian</h3>
+                <p class="featured-text">Fondata nel 2009 dal celebre profumiere Francis Kurkdjian, la Maison è sinonimo di lusso contemporaneo e raffinatezza olfattiva. Ogni creazione è un'espressione artistica che combina tradizione e modernità, con una particolare attenzione ai dettagli e alla qualità degli ingredienti.</p>
+                
+                <div class="featured-points">
+                    <div class="featured-point">
+                        <i class="fas fa-award"></i>
+                        <span>Fragranze premiate a livello internazionale</span>
+                    </div>
+                    <div class="featured-point">
+                        <i class="fas fa-star"></i>
+                        <span>Baccarat Rouge 540, bestseller mondiale</span>
+                    </div>
+                    <div class="featured-point">
+                        <i class="fas fa-leaf"></i>
+                        <span>Ingredienti selezionati dalle migliori fonti</span>
+                    </div>
+                </div>
+                
+                <a href="#" class="cta-button">Esplora la collezione</a>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter">
+        <h3 data-aos="fade-up">Iscriviti alla newsletter</h3>
+        <p data-aos="fade-up">Resta aggiornato sulle ultime novità e offerte esclusive. Iscriviti alla nostra newsletter per ricevere aggiornamenti sui nuovi arrivi, offerte speciali e consigli di profumeria.</p>
+        
+        <form class="newsletter-form" data-aos="fade-up">
+            <input type="email" placeholder="Il tuo indirizzo email" required>
+            <button type="submit">Iscriviti</button>
+        </form>
+    </section>
+    
+   
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>Informazioni</h4>
+                <ul>
+                    <li><a href="#">Chi siamo</a></li>
+                    <li><a href="#">Termini e condizioni</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Cookie policy</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Servizio clienti</h4>
+                <ul>
+                    <li><a href="#">Contattaci</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Categorie</h4>
+                <ul>
+                    <li><a href="#">Profumi donna</a></li>
+                    <li><a href="#">Profumi uomo</a></li>
+                    <li><a href="#">Profumi unisex</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contatti</h4>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@eliteparfums.it</span>
+                </div>
+                
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/profile.php?id=61550822829075"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/eliteprofumi_/"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Elite Parfums. Tutti i diritti riservati. Design by <a href="#">Elite Design</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inizializza le animazioni AOS
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            
+            // Animazione del menu durante lo scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('header');
+                if (window.scrollY > 100) {
+                    header.style.background = 'rgba(18, 18, 18, 0.95)';
+                    header.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+                } else {
+                    header.style.background = 'var(--black)';
+                    header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.2)';
+                }
+            });
+            
+            // Animazione per i prodotti
+            const productCards = document.querySelectorAll('.product-card');
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.querySelector('.product-image img').style.transform = 'scale(1.1)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.querySelector('.product-image img').style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
